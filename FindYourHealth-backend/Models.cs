@@ -81,4 +81,16 @@ namespace FindYourHealth_backend
         }
 
     }
+    public class LookUp
+    {
+        public string? Key { get; set; }
+        public string? Value { get; set; }
+
+    }
+    public record PaginatedResults<T>(
+        IEnumerable<T> Items,
+        int Page,
+        int PageSize,
+        int? TotalCount
+    );
 }
