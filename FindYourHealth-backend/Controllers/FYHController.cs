@@ -16,7 +16,7 @@ namespace FindYourHealth_backend.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetSearchResults")]
+        [HttpGet("SearchResults", Name = "result_table")]
         public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string religion)
         {
             IEnumerable<InsuranceAffiliationsModel> Affilitations;
