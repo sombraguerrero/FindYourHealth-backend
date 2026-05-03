@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,10 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.ConfigureHttpJsonOptions(o =>
+builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
-    o.SerializerOptions.PropertyNameCaseInsensitive = true;
+    options.SuppressModelStateInvalidFilter = true;
 });
+
 
 
 var app = builder.Build();
