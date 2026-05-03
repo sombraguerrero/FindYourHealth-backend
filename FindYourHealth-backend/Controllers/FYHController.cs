@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using Microsoft.Data.SqlClient;
 using Dapper;
-using System.Data;
+using Dapper.ColumnMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using System.Text;
+
 
 namespace FindYourHealth_backend.Controllers
 {
@@ -15,6 +16,7 @@ namespace FindYourHealth_backend.Controllers
         public FYHController(ILogger<FYHController> logger)
         {
             _logger = logger;
+            ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
 
         [HttpGet("SearchResults", Name = "result_table")]
