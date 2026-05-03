@@ -2,25 +2,25 @@ namespace FindYourHealth_backend
 {
     public class InsuranceAffiliationsModel
     {
-        public string? ServiceLevel { get; set; }
-        public string? ServiceType { get; set; }
-        public string? Service { get; set; }
-        public string? ServiceCategory { get; set; }
-        public string? SubServiceCategory { get; set; }
-        public string? AgeGroup { get; set; }
-        public string? InsuranceCompany { get; set; }
-        public string? InsurancePlan { get; set; }
-        public string? Company { get; set; }
-        public string? Location { get; set; }
-        public string? County { get; set; }
-        public string? Street { get; set; }
-        public string? SuiteBuilding { get; set; }
-        public string? City { get; set; }
-        public string? State { get; set; }
-        public string? Zip { get; set; }
-        public string? Phone { get; set; }
-        public string? Website { get; set; }
-        public string? Religion { get; set; }
+        public string? ServiceLevel { get; set; } = "";
+        public string? ServiceType { get; set; } = "";
+        public string? Service { get; set; } = "";
+        public string? ServiceCategory { get; set; } = "";
+        public string? SubServiceCategory { get; set; } = "";
+        public string? AgeGroup { get; set; } = "";
+        public string? InsuranceCompany { get; set; } = "";
+        public string? InsurancePlan { get; set; } = "";
+        public string? Company { get; set; } = "";
+        public string? Location { get; set; } = "";
+        public string? County { get; set; } = "";
+        public string? Street { get; set; } = "";
+        public string? SuiteBuilding { get; set; } = "";
+        public string? City { get; set; } = "";
+        public string? State { get; set; } = "";
+        public string? Zip { get; set; } = "";
+        public string? Phone { get; set; } = "";
+        public string? Website { get; set; } = "";
+        public string? Religion { get; set; } = "";
 
         public InsuranceAffiliationsModel(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string SubServiceCategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string Location, string County, string Street, string SuiteBuilding, string City, string State, string Zip, string Phone, string Website, string Religion)
         {
