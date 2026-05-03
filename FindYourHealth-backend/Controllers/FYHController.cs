@@ -19,10 +19,6 @@ namespace FindYourHealth_backend.Controllers
         [HttpGet(Name = "GetSearchResults")]
         public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string religion)
         {
-            if (string.IsNullOrEmpty(Request.Headers["X-MS-TOKEN-AAD-ACCESS-TOKEN"]))
-            {
-                return new JsonResult(Problem("This feature requires logging in and verifying your Stripe subscription!", "Authentication", 401, "Error", "Informational"));
-            }
             IEnumerable<InsuranceAffiliationsModel> Affilitations;
             using (SqlConnection sqlConnection = new SqlConnection(Environment.GetEnvironmentVariable("SQLAZURECONNSTR_fyh_conn")))
             {

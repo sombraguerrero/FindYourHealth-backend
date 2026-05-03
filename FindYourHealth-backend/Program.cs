@@ -20,4 +20,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/__routes", (IEnumerable<EndpointDataSource> sources) =>
+{
+    return sources.SelectMany(s => s.Endpoints)
+                  .OfType<RouteEndpoint>()
+                  .Select(e => e.RoutePattern.RawText)
+                  .ToList();
+});
+
+
 app.Run();
