@@ -20,7 +20,7 @@ namespace FindYourHealth_backend.Controllers
         }
 
         [HttpGet("SearchResults", Name = "result_table")]
-        public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string language, int page = 1, int qty = 20)
+        public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string language, int page = 1, int qty = 1)
         {
             IEnumerable<InsuranceAffiliationsModel> Affilitations;
             using (SqlConnection sqlConnection = new SqlConnection(Environment.GetEnvironmentVariable("SQLAZURECONNSTR_fyh_conn")))
@@ -113,17 +113,15 @@ namespace FindYourHealth_backend.Controllers
                     int lastAND = finalString.LastIndexOf("AND ");
                     finalString = finalString.Remove(lastAND, 4);
                     _logger.LogInformation("Query to be used: " + finalString);
-                    int? resultTotalCount = null;
                     Affilitations = sqlConnection.Query<InsuranceAffiliationsModel>(finalString, dynamicParameters, null, true, 0);
-                    resultTotalCount = Affilitations.Count();
                     var pitems = Affilitations
-                        .Skip(page * qty)
+                        .Skip((page - 1) * qty)
                         .Take(qty);
                     var paginatedResults = new PaginatedResults<InsuranceAffiliationsModel>(
                         pitems,
                         page,
                         qty,
-                        pitems.Count() == 0
+                        Affilitations.Count()
                     );
                     return new JsonResult(paginatedResults);
                 }

@@ -1,5 +1,4 @@
 using Dapper.ColumnMapper;
-using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -92,6 +91,6 @@ namespace FindYourHealth_backend
         IEnumerable<T> Items,
         int Page,
         int PageSize,
-        bool isEmpty
+        int? TotalCount
     );
 }
