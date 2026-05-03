@@ -116,15 +116,14 @@ namespace FindYourHealth_backend.Controllers
                     int? resultTotalCount = null;
                     Affilitations = sqlConnection.Query<InsuranceAffiliationsModel>(finalString, dynamicParameters, null, true, 0);
                     resultTotalCount = Affilitations.Count();
-                    int? toTake = (page * qty) <= resultTotalCount ? page * qty : resultTotalCount - ((page - 1) * qty);
                     var pitems = Affilitations
                         .Skip(page * qty)
-                        .Take(toTake.Value);
+                        .Take(qty);
                     var paginatedResults = new PaginatedResults<InsuranceAffiliationsModel>(
                         pitems,
                         page,
                         qty,
-                        resultTotalCount
+                        pitems.Count() == 0
                     );
                     return new JsonResult(paginatedResults);
                 }
