@@ -17,7 +17,7 @@ namespace FindYourHealth_backend.Controllers
         }
 
         [HttpGet("SearchResults", Name = "result_table")]
-        public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string religion)
+        public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string language)
         {
             IEnumerable<InsuranceAffiliationsModel> Affilitations;
             using (SqlConnection sqlConnection = new SqlConnection(Environment.GetEnvironmentVariable("SQLAZURECONNSTR_fyh_conn")))
@@ -44,7 +44,7 @@ namespace FindYourHealth_backend.Controllers
       ,[Zip]
       ,[Phone]
       ,[Website]
-      ,[Religion]
+      ,[Language]
   FROM [dbo].[vw_Affiliations] WHERE ");
                     if (!string.IsNullOrEmpty(slevel))
                     {
@@ -101,10 +101,10 @@ namespace FindYourHealth_backend.Controllers
                         builder1.Append("[State] = @sta AND ");
                         cmd.Parameters.Add(new SqlParameter("sta", sta));
                     }
-                    if (!string.IsNullOrEmpty(religion))
+                    if (!string.IsNullOrEmpty(language))
                     {
-                        builder1.Append("[Religion] = @religion AND ");
-                        cmd.Parameters.Add(new SqlParameter("religion", religion));
+                        builder1.Append("[Language] = @lang AND ");
+                        cmd.Parameters.Add(new SqlParameter("lang", language));
                     }
                     string finalString = builder1.ToString();
                     int lastAND = finalString.LastIndexOf("AND ");

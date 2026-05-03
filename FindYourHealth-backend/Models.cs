@@ -20,9 +20,9 @@ namespace FindYourHealth_backend
         public string? Zip { get; set; } = "";
         public string? Phone { get; set; } = "";
         public string? Website { get; set; } = "";
-        public string? Religion { get; set; } = "";
+        public string? Language { get; set; } = "";
 
-        public InsuranceAffiliationsModel(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string SubServiceCategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string Location, string County, string Street, string SuiteBuilding, string City, string State, string Zip, string Phone, string Website, string Religion)
+        public InsuranceAffiliationsModel(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string SubServiceCategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string Location, string County, string Street, string SuiteBuilding, string City, string State, string Zip, string Phone, string Website, string Language)
         {
             this.ServiceLevel = ServiceLevel;
             this.ServiceType = ServiceType;
@@ -42,7 +42,7 @@ namespace FindYourHealth_backend
             this.Street = Street;
             this.SuiteBuilding = SuiteBuilding;
             this.Website = Website;
-            this.Religion = Religion;
+            this.Language = Language;
         }
 
     }
