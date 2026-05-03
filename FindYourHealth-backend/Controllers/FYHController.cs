@@ -118,7 +118,7 @@ namespace FindYourHealth_backend.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex.Message);
-                    return new JsonResult(string.Empty);
+                    return new JsonResult(ex.Message);
                 }
             }
             return new JsonResult(Affilitations);
