@@ -13,6 +13,7 @@ namespace FindYourHealth_backend
         public string? Service { get; set; } = "";
         [ColumnMapping("Service Category")]
         public string? ServiceCategory { get; set; } = "";
+        [ColumnMapping("Service Subcategory")]
         public string? SubServiceCategory { get; set; } = "";
         [ColumnMapping("Age Group")]
         public string? AgeGroup { get; set; } = "";
