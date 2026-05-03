@@ -6,13 +6,19 @@ namespace FindYourHealth_backend
 {
     public class InsuranceAffiliationsModel
     {
+        [ColumnMapping("Service Level")]
         public string? ServiceLevel { get; set; } = "";
+        [ColumnMapping("Service Type")]
         public string? ServiceType { get; set; } = "";
         public string? Service { get; set; } = "";
+        [ColumnMapping("Service Category")]
         public string? ServiceCategory { get; set; } = "";
         public string? SubServiceCategory { get; set; } = "";
+        [ColumnMapping("Age Group")]
         public string? AgeGroup { get; set; } = "";
+        [ColumnMapping("Insurance Company")]
         public string? InsuranceCompany { get; set; } = "";
+        [ColumnMapping("Insurance Plan")]
         public string? InsurancePlan { get; set; } = "";
         public string? Company { get; set; } = "";
         public string? Locations { get; set; } = "";
