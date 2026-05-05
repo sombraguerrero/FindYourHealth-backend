@@ -20,7 +20,7 @@ namespace FindYourHealth_backend.Controllers
         }
 
         [HttpGet("SearchResults", Name = "result_table")]
-        public JsonResult Result_Table(string slevel, string stype, string srv, string scat, string sscat, string agroup, string insc, string insp, string comp, string _cnty, string sta, string language, int page = 1, int qty = 1)
+        public JsonResult Result_Table(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string ServiceSubcategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string County, string State, string Language, int page = 1, int qty = 1)
         {
             IEnumerable<InsuranceAffiliationsModel> Affilitations;
             using (SqlConnection sqlConnection = new SqlConnection(Environment.GetEnvironmentVariable("SQLAZURECONNSTR_fyh_conn")))
@@ -30,65 +30,65 @@ namespace FindYourHealth_backend.Controllers
                     sqlConnection.Open();
                     DynamicParameters dynamicParameters = new DynamicParameters();
                     StringBuilder builder1 = new StringBuilder(@"SELECT [Service Level] ,[Service Type] ,[Service] ,[Service Category] ,[Service Subcategory] ,[Age Group] ,[Insurance Company] ,[Insurance Plan] ,[Company] ,[Locations] ,[County] ,[Street] ,[St/bldg] ,[City] ,[State] ,[Zip] ,[Phone] ,[Website] ,[Language] FROM [dbo].[vw_Affiliations] WHERE ");
-                    if (!string.IsNullOrEmpty(slevel))
+                    if (!string.IsNullOrEmpty(ServiceLevel))
                     {
                         builder1.Append("[Service Level] = @slevel AND ");
-                        dynamicParameters.Add("slevel", slevel);
+                        dynamicParameters.Add("slevel", ServiceLevel);
                     }
-                    if (!string.IsNullOrEmpty(stype))
+                    if (!string.IsNullOrEmpty(ServiceType))
                     {
                         builder1.Append("[Service Type] = @st AND ");
-                        dynamicParameters.Add("st", stype);
+                        dynamicParameters.Add("st", ServiceType);
                     }
-                    if (!string.IsNullOrEmpty(srv))
+                    if (!string.IsNullOrEmpty(Service))
                     {
                         builder1.Append("[Service] = @srv AND ");
-                        dynamicParameters.Add("srv", srv);
+                        dynamicParameters.Add("srv", Service);
                     }
-                    if (!string.IsNullOrEmpty(scat))
+                    if (!string.IsNullOrEmpty(ServiceCategory))
                     {
                         builder1.Append("[Service Category] = @scat AND ");
-                        dynamicParameters.Add("scat", scat);
+                        dynamicParameters.Add("scat", ServiceCategory);
                     }
-                    if (!string.IsNullOrEmpty(sscat))
+                    if (!string.IsNullOrEmpty(ServiceSubcategory))
                     {
                         builder1.Append("[Service Subcategory] = @sscat AND ");
-                        dynamicParameters.Add("sscat", sscat);
+                        dynamicParameters.Add("sscat", ServiceSubcategory);
                     }
-                    if (!string.IsNullOrEmpty(agroup))
+                    if (!string.IsNullOrEmpty(AgeGroup))
                     {
                         builder1.Append("[Age Group] = @agroup AND ");
-                        dynamicParameters.Add("agroup", agroup);
+                        dynamicParameters.Add("agroup", AgeGroup);
                     }
-                    if (!string.IsNullOrEmpty(insc))
+                    if (!string.IsNullOrEmpty(InsuranceCompany))
                     {
                         builder1.Append("[Insurance Company] = @insc AND ");
-                        dynamicParameters.Add("insc", insc);
+                        dynamicParameters.Add("insc", InsuranceCompany);
                     }
-                    if (!string.IsNullOrEmpty(insp))
+                    if (!string.IsNullOrEmpty(InsurancePlan))
                     {
                         builder1.Append("[Insurance Plan] = @insp AND ");
-                        dynamicParameters.Add("insp", insp);
+                        dynamicParameters.Add("insp", InsurancePlan);
                     }
-                    if (!string.IsNullOrEmpty(comp))
+                    if (!string.IsNullOrEmpty(Company))
                     {
                         builder1.Append("[Company] = @comp AND ");
-                        dynamicParameters.Add("comp", comp);
+                        dynamicParameters.Add("comp", Company);
                     }
-                    if (!string.IsNullOrEmpty(_cnty))
+                    if (!string.IsNullOrEmpty(County))
                     {
                         builder1.Append("[County] = @cnty AND ");
-                        dynamicParameters.Add("cnty", _cnty);
+                        dynamicParameters.Add("cnty", County);
                     }
-                    if (!string.IsNullOrEmpty(sta))
+                    if (!string.IsNullOrEmpty(State))
                     {
                         builder1.Append("[State] = @sta AND ");
-                        dynamicParameters.Add("sta", sta);
+                        dynamicParameters.Add("sta", State);
                     }
-                    if (!string.IsNullOrEmpty(language))
+                    if (!string.IsNullOrEmpty(Language))
                     {
                         builder1.Append("[Language] = @lang AND ");
-                        dynamicParameters.Add("lang", language);
+                        dynamicParameters.Add("lang", Language);
                     }
                     string finalString = builder1.ToString();
                     int lastAND = finalString.LastIndexOf("AND ");
