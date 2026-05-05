@@ -1,4 +1,4 @@
-SELECT 'ServiceLevel' as 'Key', [Service Level] as 'Value'  FROM [dbo].[Service Level] WHERE [Service Level] IS NOT NULL AND [Service Level] <> ''
+select distinct t.[Key] from (SELECT 'ServiceLevel' as 'Key', [Service Level] as 'Value'  FROM [dbo].[Service Level] WHERE [Service Level] IS NOT NULL AND [Service Level] <> ''
 union
 SELECT 'ServiceType', [Type] FROM [dbo].[Service Type] WHERE [Type] IS NOT NULL AND [Type] <> ''
 union
@@ -32,5 +32,4 @@ SELECT 'Zip', TRIM([Zip]) FROM [dbo].[Zip] WHERE [Zip] IS NOT NULL AND [Zip] <> 
 union
 SELECT 'Phone', [Phone] FROM [dbo].[Locations] WHERE [Phone] IS NOT NULL AND [Phone] <> ''
 union
-SELECT 'Language', [Language] FROM [dbo].[Language] WHERE [Language] IS NOT NULL AND [Language] <> ''
-order by [Key]
+SELECT 'Language', [Language] FROM [dbo].[Language] WHERE [Language] IS NOT NULL AND [Language] <> '') as t
