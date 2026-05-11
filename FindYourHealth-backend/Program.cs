@@ -11,10 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer();
+builder.Services.AddSingleton<IClaimsTransformation, EasyAuthClaimsTransformation>();
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("FrontendOnly", policy =>
+        policy.RequireClaim("roles", "WordPress"));
+});
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
