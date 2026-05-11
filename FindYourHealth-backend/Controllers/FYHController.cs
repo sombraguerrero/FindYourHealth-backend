@@ -9,6 +9,7 @@ using System.Text;
 namespace FindYourHealth_backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class FYHController : ControllerBase
     {
@@ -20,40 +21,6 @@ namespace FindYourHealth_backend.Controllers
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
 
-        [HttpGet("debug-claims")]
-        public IActionResult DebugClaims()
-        {
-            return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
-        }
-
-        [HttpGet("debug-auth")]
-        public IActionResult DebugAuth()
-        {
-            var headers = Request.Headers
-                .Where(h => h.Key.StartsWith("X-MS-", StringComparison.OrdinalIgnoreCase))
-                .ToDictionary(h => h.Key, h => h.Value.ToString());
-
-            return Ok(headers);
-        }
-
-        [HttpGet("debug-easyauth")]
-        public IActionResult DebugEasyAuth()
-        {
-            var result = new Dictionary<string, string>();
-
-            foreach (var header in Request.Headers)
-            {
-                if (header.Key.StartsWith("X-MS-TOKEN-AAD", StringComparison.OrdinalIgnoreCase))
-                {
-                    result[header.Key] = header.Value.ToString();
-                }
-            }
-
-            return Ok(result);
-        }
-
-
-        [Authorize(Policy = "FrontendOnly")]
         [HttpGet("SearchResults", Name = "result_table")]
         public JsonResult Result_Table(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string ServiceSubcategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string County, string State, string Language, int page = 1, int qty = 1)
         {
@@ -148,7 +115,7 @@ namespace FindYourHealth_backend.Controllers
                 }
             }
         }
-        [Authorize(Policy = "FrontendOnly")]
+
         [HttpGet("Lookup", Name = "Lookup")]
         public JsonResult LookupKV()
         {

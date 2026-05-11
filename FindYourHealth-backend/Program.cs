@@ -12,21 +12,9 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-.AddJwtBearer(jwtOptions =>
-{
-    jwtOptions.Authority = "https://login.microsoftonline.com/349bca1a-7c38-47e2-94a1-ba4d64ac0e00";
-    jwtOptions.Audience = "api://4bf6ce1d-cdca-4341-bb1c-d58eb0828616/.default";
-});
+.AddJwtBearer();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("FrontendOnly", policy =>
-        policy.RequireRole("App.Frontend"));
-
-    options.AddPolicy("AdminOnly", policy =>
-        policy.RequireRole("App.Admin"));
-});
-builder.Services.AddSingleton<IClaimsTransformation, EasyAuthClaimsTransformation>();
+builder.Services.AddAuthorization();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
