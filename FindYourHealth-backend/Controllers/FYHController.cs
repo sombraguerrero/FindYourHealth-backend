@@ -9,7 +9,6 @@ using System.Text;
 namespace FindYourHealth_backend.Controllers
 {
     [ApiController]
-    [Authorize(Policy = "FrontendOnly")]
     [Route("[controller]")]
     public class FYHController : ControllerBase
     {
@@ -20,7 +19,7 @@ namespace FindYourHealth_backend.Controllers
             _logger = logger;
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
-
+        
         [HttpGet("debug-auth")]
         public IActionResult DebugAuth()
         {
@@ -31,7 +30,7 @@ namespace FindYourHealth_backend.Controllers
             return Ok(headers);
         }
 
-
+        [Authorize(Policy = "FrontendOnly")]
         [HttpGet("SearchResults", Name = "result_table")]
         public JsonResult Result_Table(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string ServiceSubcategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string County, string State, string Language, int page = 1, int qty = 1)
         {
@@ -126,7 +125,7 @@ namespace FindYourHealth_backend.Controllers
                 }
             }
         }
-
+        [Authorize(Policy = "FrontendOnly")]
         [HttpGet("Lookup", Name = "Lookup")]
         public JsonResult LookupKV()
         {
