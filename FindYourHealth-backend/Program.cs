@@ -16,7 +16,7 @@ builder.Services.AddSingleton<IClaimsTransformation, EasyAuthClaimsTransformatio
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("FrontendOnly", policy =>
-        policy.RequireClaim("roles", "WordPress"));
+    policy.RequireClaim("azp", "39bd4854-b3a7-42ef-9cf5-09067e72935f"));
 });
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
