@@ -9,6 +9,7 @@ using System.Text;
 namespace FindYourHealth_backend.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class FYHController : ControllerBase
     {
