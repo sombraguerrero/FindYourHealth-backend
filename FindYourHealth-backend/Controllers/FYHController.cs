@@ -21,6 +21,13 @@ namespace FindYourHealth_backend.Controllers
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
 
+        [HttpGet("debug-token")]
+        public IActionResult DebugToken()
+        {
+            return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
+        }
+
+
         [HttpGet("SearchResults", Name = "result_table")]
         public JsonResult Result_Table(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string ServiceSubcategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string County, string State, string Language, int page = 1, int qty = 1)
         {

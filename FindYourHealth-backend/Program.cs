@@ -15,6 +15,25 @@ var audience = builder.Configuration["AzureAd:Audience"];
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = ctx =>
+            {
+                Console.WriteLine("JWT ERROR: " + ctx.Exception.ToString());
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = ctx =>
+            {
+                Console.WriteLine("JWT VALIDATED: " + ctx.Principal.Identity?.Name);
+                return Task.CompletedTask;
+            },
+            OnChallenge = ctx =>
+            {
+                Console.WriteLine("JWT CHALLENGE: " + ctx.ErrorDescription);
+                return Task.CompletedTask;
+            }
+        };
+
         options.Authority = $"https://login.microsoftonline.com/{tenantId}/v2.0";
         options.Audience = audience;
 
