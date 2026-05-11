@@ -9,7 +9,7 @@ using System.Text;
 namespace FindYourHealth_backend.Controllers
 {
     [ApiController]
-    [Authorize(Policy = "FrontendOnly")]
+    //[Authorize(Policy = "FrontendOnly")]
     [Route("[controller]")]
     public class FYHController : ControllerBase
     {

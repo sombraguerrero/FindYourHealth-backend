@@ -11,13 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-
+/**
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("FrontendOnly", policy =>
     policy.RequireClaim("azp", "39bd4854-b3a7-42ef-9cf5-09067e72935f"));
 });
-
+**/
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
