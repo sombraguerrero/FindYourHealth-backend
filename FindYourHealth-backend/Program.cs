@@ -3,25 +3,14 @@ using Microsoft.IdentityModel.Tokens;
 
 string tenantId = @"349bca1a-7c38-47e2-94a1-ba4d64ac0e00";
 string appId = @"39bd4854-b3a7-42ef-9cf5-09067e72935f";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-
-
+// 🔥 Authentication MUST be added BEFORE builder.Build()
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -62,6 +51,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+// Authorization also must be added before Build()
+builder.Services.AddAuthorization();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+
+// 🔥 Authentication middleware MUST come before Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
