@@ -9,7 +9,6 @@ using System.Text;
 namespace FindYourHealth_backend.Controllers
 {
     [ApiController]
-    
     [Route("[controller]")]
     public class FYHController : ControllerBase
     {
@@ -19,12 +18,6 @@ namespace FindYourHealth_backend.Controllers
         {
             _logger = logger;
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
-        }
-
-        [HttpGet("debug-token")]
-        public IActionResult DebugToken()
-        {
-            return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
         }
 
         //[Authorize(Policy = "FrontendOnly")]
