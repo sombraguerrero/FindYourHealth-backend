@@ -9,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+// 🔥 Disable automatic 400 responses from model binding
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 // 🔥 Authentication MUST be added BEFORE builder.Build()
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
