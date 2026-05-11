@@ -1,8 +1,6 @@
-using FindYourHealth_backend;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.HttpSys;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +9,36 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-/**
+var tenantId = builder.Configuration["AzureAd:TenantId"];
+var audience = builder.Configuration["AzureAd:Audience"];
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = $"https://login.microsoftonline.com/{tenantId}/v2.0";
+        options.Audience = audience;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = $"https://login.microsoftonline.com/{tenantId}/v2.0",
+
+            ValidateAudience = true,
+            ValidAudience = audience,
+
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            // Map "roles" claim
+            RoleClaimType = "roles"
+        };
+    });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("FrontendOnly", policy =>
-    policy.RequireClaim("azp", "39bd4854-b3a7-42ef-9cf5-09067e72935f"));
+        policy.RequireRole("App.Frontend"));
 });
-**/
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
@@ -35,6 +56,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
