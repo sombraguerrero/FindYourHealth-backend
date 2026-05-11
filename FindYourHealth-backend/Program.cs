@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+/**
 var tenantId = builder.Configuration["AzureAd:TenantId"];
 var audience = builder.Configuration["AzureAd:Audience"];
 
@@ -58,6 +60,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("FrontendOnly", policy =>
         policy.RequireRole("App.Frontend"));
 });
+**/
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
