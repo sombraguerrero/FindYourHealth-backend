@@ -21,6 +21,17 @@ namespace FindYourHealth_backend.Controllers
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
 
+        [HttpGet("debug-auth")]
+        public IActionResult DebugAuth()
+        {
+            var headers = Request.Headers
+                .Where(h => h.Key.StartsWith("X-MS-", StringComparison.OrdinalIgnoreCase))
+                .ToDictionary(h => h.Key, h => h.Value.ToString());
+
+            return Ok(headers);
+        }
+
+
         [HttpGet("SearchResults", Name = "result_table")]
         public JsonResult Result_Table(string ServiceLevel, string ServiceType, string Service, string ServiceCategory, string ServiceSubcategory, string AgeGroup, string InsuranceCompany, string InsurancePlan, string Company, string County, string State, string Language, int page = 1, int qty = 1)
         {
