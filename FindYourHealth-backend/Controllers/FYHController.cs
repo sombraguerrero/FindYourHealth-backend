@@ -19,7 +19,13 @@ namespace FindYourHealth_backend.Controllers
             _logger = logger;
             ColumnTypeMapper.RegisterForTypes(typeof(InsuranceAffiliationsModel));
         }
-        
+
+        [HttpGet("debug-claims")]
+        public IActionResult DebugClaims()
+        {
+            return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
+        }
+
         [HttpGet("debug-auth")]
         public IActionResult DebugAuth()
         {

@@ -1,5 +1,7 @@
 using Dapper.ColumnMapper;
+using Microsoft.AspNetCore.Authentication;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
 
 namespace FindYourHealth_backend
@@ -86,6 +88,39 @@ namespace FindYourHealth_backend
         public string? Key { get; set; }
         public string? Value { get; set; }
 
+    }
+
+    public class EasyAuthClaimsTransformation : IClaimsTransformation
+    {
+        public Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
+        {
+            var identity = principal.Identity as ClaimsIdentity;
+            if (identity == null)
+                return Task.FromResult(principal);
+
+            // Easy Auth puts all claims inside X-MS-CLIENT-PRINCIPAL
+            var header = identity.Claims
+                .FirstOrDefault(c => c.Type == "X-MS-CLIENT-PRINCIPAL")?.Value;
+
+            if (header != null)
+            {
+                var decoded = System.Text.Encoding.UTF8.GetString(
+                    Convert.FromBase64String(header));
+
+                var principalData = System.Text.Json.JsonDocument.Parse(decoded);
+                var claims = principalData.RootElement.GetProperty("claims");
+
+                foreach (var claim in claims.EnumerateArray())
+                {
+                    var type = claim.GetProperty("typ").GetString();
+                    var value = claim.GetProperty("val").GetString();
+
+                    identity.AddClaim(new Claim(type, value));
+                }
+            }
+
+            return Task.FromResult(principal);
+        }
     }
     public record PaginatedResults<T>(
         IEnumerable<T> Items,

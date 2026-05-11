@@ -1,3 +1,4 @@
+using FindYourHealth_backend;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,8 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireRole("App.Admin"));
 });
+builder.Services.AddSingleton<IClaimsTransformation, EasyAuthClaimsTransformation>();
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
