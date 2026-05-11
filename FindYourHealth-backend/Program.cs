@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("FrontendOnly", policy =>
+        policy.RequireRole("App.Frontend"));
+
+    options.AddPolicy("AdminOnly", policy =>
+        policy.RequireRole("App.Admin"));
+});
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
@@ -27,14 +39,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.MapGet("/__routes", (IEnumerable<EndpointDataSource> sources) =>
-{
-    return sources.SelectMany(s => s.Endpoints)
-                  .OfType<RouteEndpoint>()
-                  .Select(e => e.RoutePattern.RawText)
-                  .ToList();
-});
 
 
 app.Run();
