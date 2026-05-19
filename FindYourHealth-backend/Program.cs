@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-string tenantId = @"349bca1a-7c38-47e2-94a1-ba4d64ac0e00";
-string appId = @"39bd4854-b3a7-42ef-9cf5-09067e72935f";
-
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
+
+var tenantId = config["fyhTenant"];
+var clientId = config["fyhAppId"];
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -20,7 +21,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = $"https://login.microsoftonline.com/{tenantId}/v2.0";
-        options.Audience = appId;
+        options.Audience = clientId;
 
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -28,7 +29,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = $"https://login.microsoftonline.com/{tenantId}/v2.0",
 
             ValidateAudience = true,
-            ValidAudience = appId,
+            ValidAudience = clientId,
 
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
